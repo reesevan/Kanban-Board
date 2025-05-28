@@ -1,5 +1,5 @@
+// src/models/ticket.ts
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
-import { User } from './user';
 
 interface TicketAttributes {
   id: number;
@@ -16,10 +16,7 @@ export class Ticket extends Model<TicketAttributes, TicketCreationAttributes> im
   public name!: string;
   public status!: string;
   public description!: string;
-  public assignedUserId!: number;
-
-  // associated User model
-  public readonly assignedUser?: User;
+  public assignedUserId?: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -40,14 +37,19 @@ export function TicketFactory(sequelize: Sequelize): typeof Ticket {
       status: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: 'Todo',
       },
       description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       assignedUserId: {
         type: DataTypes.INTEGER,
         allowNull: true,
+        references: {
+          model: 'users',
+          key: 'id',
+        },
       },
     },
     {
