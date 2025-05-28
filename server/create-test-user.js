@@ -1,9 +1,6 @@
-// create-test-user.js
-// Run this script to create a test user in your database
-
 import bcrypt from 'bcrypt';
-import { User } from './src/models/user.js';
-import { sequelize } from './src/config/connection.js';
+import { User } from './dist/models/user.js';  // Changed from src/ to dist/
+import { sequelize } from './dist/config/connection.js';  // Changed from src/ to dist/
 
 const createTestUser = async () => {
   try {
@@ -18,6 +15,8 @@ const createTestUser = async () => {
 
     if (existingUser) {
       console.log('Test user already exists');
+      console.log('Username: testuser');
+      console.log('User ID:', existingUser.id);
       return;
     }
 
